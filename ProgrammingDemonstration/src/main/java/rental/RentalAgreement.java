@@ -2,16 +2,32 @@ package main.java.rental;
 
 import main.java.tools.ITool;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class RentalAgreement {
     private ITool tool;
+    private LocalDate checkoutDate;
     private int days;
     private int discountPercentage;
 
-    public RentalAgreement(ITool tool, int days, int discountPercentage) {
-        this.tool = tool;
-        this.days = days;
-        this.discountPercentage = discountPercentage;
+    public ITool getTool() {
+        return tool;
+    }
+
+    public LocalDate getCheckoutDate() {
+        return checkoutDate;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public int getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public LocalDate getReturnDate() {
+        return checkoutDate.plus(days, ChronoUnit.DAYS);
     }
 }

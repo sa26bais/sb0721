@@ -1,26 +1,52 @@
 package main.java.rental;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import main.java.tools.ITool;
 
 public class RentalAgreementProcessor {
 
-    public BigDecimal calculateDiscount(BigDecimal preDiscountTotal, int discountPercent) {
-        BigDecimal discountDecimal = BigDecimal.valueOf((double) discountPercent/100);
-        return preDiscountTotal.multiply(discountDecimal);
+    public ProcessedRentalResult processRentalAgreement(RentalAgreement rentalAgreement) {
+        ProcessedRentalResult rentalResult = new ProcessedRentalResult(rentalAgreement);
+
+        String validationMessage = validateRental(rentalAgreement, rentalResult);
+
+        if (validationMessage != null && !validationMessage.isEmpty()) {
+            rentalResult.setWarningMessage(validationMessage);
+            return rentalResult;
+        } else {
+            int chargeDays = calculateChargeDays(rentalAgreement);
+            rentalResult.setChargeDays(chargeDays);
+        }
+
+        return rentalResult;
     }
 
-    public String formatMoney(BigDecimal bigDecimal) {
-        NumberFormat df = DecimalFormat.getCurrencyInstance(Locale.US);
-        return df.format(bigDecimal);
+    private int calculateChargeDays(RentalAgreement rentalAgreement) {
+        int chargeDays = 0;
+        int weekDays = 0;
+        int weekendDays = 0;
+        int holidays = 0;
+
+
+        ITool tool = rentalAgreement.getTool();
+        if (tool.isChargeWeekdays()) {
+            chargeDays=+weekDays;
+        }
+        if (tool.isChargeWeekends()) {
+            chargeDays=+weekendDays;
+        }
+        if (tool.isChargeHolidays()) {
+            chargeDays=+holidays;
+        }
+        return chargeDays;
     }
 
-    public String formatDate(LocalDate localDate) {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        return dateFormat.format(localDate);
+    private String validateRental(RentalAgreement rentalAgreement, ProcessedRentalResult rentalResult) {
+        if (rentalAgreement.getDiscountPercentage() > 100 || rentalAgreement.getDiscountPercentage() < 0) {
+            return "Discount percent invalid, must be between 0% and 100%";
+        } else if (rentalAgreement.getDays() < 1) {
+            return "Rental days invalid, must be for 1 day or more";
+        } else {
+            return null;
+        }
     }
 }

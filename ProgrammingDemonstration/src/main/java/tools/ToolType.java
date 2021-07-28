@@ -35,4 +35,8 @@ public enum ToolType {
                 .filter(toolType -> toolType.getBaseToolCode().equals(code))
                 .findFirst().orElseThrow(() -> new InvalidParameterException("Code " + code + " d"));
     }
+
+    public static void main(String[] args) {
+        ToolType.CHAINSAW.getToolClass();
+    }
 }

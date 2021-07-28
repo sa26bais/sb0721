@@ -10,7 +10,7 @@ public class Chainsaw extends ITool {
     }
 
     @Override
-    public BigDecimal dailyCharge() {
+    public BigDecimal getDailyCharge() {
         return new BigDecimal("1.49");
     }
 

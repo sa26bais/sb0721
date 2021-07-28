@@ -7,7 +7,7 @@ public abstract class ITool {
 
     public abstract ToolType getToolType();
 
-    public abstract BigDecimal dailyCharge();
+    public abstract BigDecimal getDailyCharge();
 
     public boolean isChargeWeekdays() {
         // As of now there are no tools that are free for a weekday. Likely this always going to be the
