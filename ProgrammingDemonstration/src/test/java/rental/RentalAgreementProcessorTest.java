@@ -209,4 +209,26 @@ class RentalAgreementProcessorTest {
         int chargeDays = rentalAgreementProcessor.calculateChargeDays(rentalAgreement);
         Assertions.assertEquals(chargeDays, 1);
     }
+
+    @Test
+    public void testRentalCrossingYearRentalWithWeekendCharge() {
+        RentalAgreementProcessor rentalAgreementProcessor = new RentalAgreementProcessor();
+        RentalAgreement rentalAgreement = new RentalAgreement();
+        rentalAgreement.setTool(new Ladder());
+        rentalAgreement.setCheckoutDate(LocalDate.of(2021, Month.DECEMBER, 30));
+        rentalAgreement.setDays(5);
+        int chargeDays = rentalAgreementProcessor.calculateChargeDays(rentalAgreement);
+        Assertions.assertEquals(chargeDays, 5);
+    }
+
+    @Test
+    public void testRentalCrossingYearRentalWithoutWeekendCharge() {
+        RentalAgreementProcessor rentalAgreementProcessor = new RentalAgreementProcessor();
+        RentalAgreement rentalAgreement = new RentalAgreement();
+        rentalAgreement.setTool(new Jackhammer());
+        rentalAgreement.setCheckoutDate(LocalDate.of(2021, Month.DECEMBER, 30));
+        rentalAgreement.setDays(5);
+        int chargeDays = rentalAgreementProcessor.calculateChargeDays(rentalAgreement);
+        Assertions.assertEquals(chargeDays, 3);
+    }
 }
