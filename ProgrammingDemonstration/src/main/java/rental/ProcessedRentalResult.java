@@ -3,6 +3,7 @@ package main.java.rental;
 import main.java.tools.ITool;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -27,6 +28,11 @@ public class ProcessedRentalResult {
     public static String formatMoney(BigDecimal bigDecimal) {
         NumberFormat df = DecimalFormat.getCurrencyInstance(Locale.US);
         return df.format(bigDecimal);
+    }
+
+    public static BigDecimal getPercentOfValue(BigDecimal value, int percent) {
+        BigDecimal discountDecimal = BigDecimal.valueOf((double) percent / 100);
+        return value.multiply(discountDecimal).setScale(2, RoundingMode.HALF_UP);
     }
 
     public String getRentalMessage() {
@@ -78,10 +84,8 @@ public class ProcessedRentalResult {
         return dailyCharge.multiply(BigDecimal.valueOf(chargeDays));
     }
 
-    public BigDecimal getDiscount() {
-        int discountPercent = rentalAgreement.getDiscountPercentage();
-        BigDecimal discountDecimal = BigDecimal.valueOf((double) discountPercent / 100);
-        return getPreDiscountCharge().multiply(discountDecimal);
+    private BigDecimal getDiscount() {
+        return getPercentOfValue(getPreDiscountCharge(), rentalAgreement.getDiscountPercentage());
     }
 
     private BigDecimal getFinalCharge() {
