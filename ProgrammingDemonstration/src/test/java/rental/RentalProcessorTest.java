@@ -46,4 +46,13 @@ class RentalProcessorTest {
         String result = rentalProcessor.processRentalRequest(VALID_TOOL_CODE, LocalDate.now(), 1, -50);
         Assertions.assertEquals(result, RentalAgreementProcessor.INVALID_DISCOUNT_WARNING);
     }
+
+    @Test
+    public void testRentalWithMultipleWarnings() {
+        RentalProcessor rentalProcessor = new RentalProcessor();
+        String result = rentalProcessor.processRentalRequest("", LocalDate.now(), -3, -50);
+        Assertions.assertTrue(result.contains(RentalAgreementProcessor.INVALID_TOOL));
+        Assertions.assertTrue(result.contains(RentalAgreementProcessor.INVALID_DISCOUNT_WARNING));
+        Assertions.assertTrue(result.contains(RentalAgreementProcessor.INVALID_DAYS_WARNING));
+    }
 }
