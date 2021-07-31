@@ -1,14 +1,11 @@
 package test.java;
 
 import main.java.rental.ProcessedRentalResult;
-import main.java.rental.RentalAgreementProcessor;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProcessedRentalResultTest {
 

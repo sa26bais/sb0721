@@ -18,25 +18,31 @@ public class ProcessedRentalResult {
         this.rentalAgreement = rentalAgreement;
     }
 
-    public void printAgreementToConsole() {
+    public String getRentalMessage() {
+        // Check to see if there was a validation that failed
         if (warningMessage != null && !warningMessage.isEmpty()) {
-            System.out.println(warningMessage);
-            return;
+            return warningMessage;
         }
 
+        StringBuilder invoice = new StringBuilder();
         ITool tool = rentalAgreement.getTool();
-        System.out.println("Tool code: " + tool.getToolType()); //FIXME: Tool code
-        System.out.println("Tool type: " + tool.getToolType());
-        System.out.println("Tool brand: " + tool.getManufacturer());
-        System.out.println("Rental days: " + rentalAgreement.getDays());
-        System.out.println("Check out date: " + formatDate(rentalAgreement.getCheckoutDate()));
-        System.out.println("Due date: " + formatDate(rentalAgreement.getReturnDate()));
-        System.out.println("Daily rental charge: " + formatMoney(tool.getDailyCharge()));
-        System.out.println("Charge days: " + chargeDays);
-        System.out.println("Pre-discount charge: " + formatMoney(getPreDiscountCharge()));
-        System.out.println("Discount percent : " + rentalAgreement.getDiscountPercentage());
-        System.out.println("Discount amount: " + formatMoney(getDiscount()));
-        System.out.println("Final charge: " + formatMoney(getFinalCharge()));
+        addInvoiceLine(invoice, "Tool code: ", tool.getToolCode());
+        addInvoiceLine(invoice, "Tool type: ", tool.getDisplayName());
+        addInvoiceLine(invoice, "Tool brand: ", tool.getManufacturer());
+        addInvoiceLine(invoice, "Rental days: ", String.valueOf(rentalAgreement.getDays()));
+        addInvoiceLine(invoice, "Check out date: ", formatDate(rentalAgreement.getCheckoutDate()));
+        addInvoiceLine(invoice, "Due date: ", formatDate(rentalAgreement.getReturnDate()));
+        addInvoiceLine(invoice, "Daily rental charge: ", formatMoney(tool.getDailyCharge()));
+        addInvoiceLine(invoice, "Charge days: ", String.valueOf(chargeDays));
+        addInvoiceLine(invoice, "Pre-discount charge: ", formatMoney(getPreDiscountCharge()));
+        addInvoiceLine(invoice, "Discount percent : ", rentalAgreement.getDiscountPercentage() + "%");
+        addInvoiceLine(invoice, "Discount amount: ", formatMoney(getDiscount()));
+        addInvoiceLine(invoice, "Final charge: ", formatMoney(getFinalCharge()));
+        return invoice.toString();
+    }
+
+    private void addInvoiceLine(StringBuilder stringBuilder, String label, String data) {
+        stringBuilder.append(label).append(data).append(System.lineSeparator());
     }
 
     private BigDecimal getPreDiscountCharge() {

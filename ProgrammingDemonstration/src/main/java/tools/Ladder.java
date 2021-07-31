@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class Ladder extends ITool {
 
     @Override
-    public ToolType getToolType() {
-        return ToolType.LADDER;
+    public String getDisplayName() {
+        return "Ladder";
     }
 
     @Override

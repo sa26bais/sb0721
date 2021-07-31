@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class Jackhammer extends ITool {
 
     @Override
-    public ToolType getToolType() {
-        return ToolType.JACKHAMMER;
+    public String getDisplayName() {
+        return "Jackhammer";
     }
 
     @Override

@@ -2,6 +2,8 @@ package main.java.rental;
 
 import main.java.tools.ITool;
 
+import java.time.LocalDate;
+
 public class RentalAgreementProcessor {
 
     public ProcessedRentalResult processRentalAgreement(RentalAgreement rentalAgreement) {
@@ -26,16 +28,25 @@ public class RentalAgreementProcessor {
         int weekendDays = 0;
         int holidays = 0;
 
+        LocalDate checkoutDate = rentalAgreement.getCheckoutDate();
+        LocalDate returnDate = rentalAgreement.getReturnDate();
+
+
+        // To quiet inspections of changes; FIXME: remove
+        weekDays++;
+        weekendDays++;
+        holidays++;
+        // end code to mute warnings
 
         ITool tool = rentalAgreement.getTool();
         if (tool.isChargeWeekdays()) {
-            chargeDays=+weekDays;
+            chargeDays+=weekDays;
         }
         if (tool.isChargeWeekends()) {
-            chargeDays=+weekendDays;
+            chargeDays+=weekendDays;
         }
         if (tool.isChargeHolidays()) {
-            chargeDays=+holidays;
+            chargeDays+=holidays;
         }
         return chargeDays;
     }

@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class Chainsaw extends ITool {
 
     @Override
-    public ToolType getToolType() {
-        return ToolType.CHAINSAW;
+    public String getDisplayName() {
+        return "Chainsaw";
     }
 
     @Override
