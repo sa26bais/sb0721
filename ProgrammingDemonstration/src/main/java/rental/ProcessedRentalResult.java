@@ -66,7 +66,10 @@ public class ProcessedRentalResult {
     }
 
     private void addInvoiceLine(StringBuilder stringBuilder, String label, String data, boolean addNewLine) {
-        stringBuilder.append(label).append(data).append(System.lineSeparator());
+        stringBuilder.append(label).append(data);
+        if (addNewLine) {
+            stringBuilder.append(System.lineSeparator());
+        }
     }
 
     private BigDecimal getPreDiscountCharge() {
