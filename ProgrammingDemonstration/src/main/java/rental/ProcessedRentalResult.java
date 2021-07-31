@@ -46,16 +46,26 @@ public class ProcessedRentalResult {
             addInvoiceLine(invoice, "Pre-discount charge: ", formatMoney(getPreDiscountCharge()));
             addInvoiceLine(invoice, "Discount percent : ", rentalAgreement.getDiscountPercentage() + "%");
             addInvoiceLine(invoice, "Discount amount: ", formatMoney(getDiscount()));
-            addInvoiceLine(invoice, "Final charge: ", formatMoney(getFinalCharge()));
+            addInvoiceLine(invoice, "Final charge: ", formatMoney(getFinalCharge()), false);
         } else {
-            for(String message : warningMessages) {
-                invoice.append(message).append(System.lineSeparator());
+            // In production code I would use StringUtils for this + all the null/empty checking done.
+            boolean first = true;
+            for (String message : warningMessages) {
+                if (!first) {
+                    invoice.append(System.lineSeparator());
+                }
+                invoice.append(message);
+                first = false;
             }
         }
         return invoice.toString();
     }
 
     private void addInvoiceLine(StringBuilder stringBuilder, String label, String data) {
+        addInvoiceLine(stringBuilder, label, data, true);
+    }
+
+    private void addInvoiceLine(StringBuilder stringBuilder, String label, String data, boolean addNewLine) {
         stringBuilder.append(label).append(data).append(System.lineSeparator());
     }
 
@@ -67,7 +77,7 @@ public class ProcessedRentalResult {
 
     public BigDecimal getDiscount() {
         int discountPercent = rentalAgreement.getDiscountPercentage();
-        BigDecimal discountDecimal = BigDecimal.valueOf((double) discountPercent/100);
+        BigDecimal discountDecimal = BigDecimal.valueOf((double) discountPercent / 100);
         return getPreDiscountCharge().multiply(discountDecimal);
     }
 
