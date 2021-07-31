@@ -11,7 +11,7 @@ public class Jackhammer extends ITool {
 
     @Override
     public BigDecimal getDailyCharge() {
-        return new BigDecimal("1.49");
+        return new BigDecimal("2.99");
     }
 
     @Override
@@ -21,6 +21,6 @@ public class Jackhammer extends ITool {
 
     @Override
     public boolean isChargeHolidays() {
-        return true;
+        return false;
     }
 }
