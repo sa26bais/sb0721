@@ -16,10 +16,6 @@ public class RentalProcessor {
 
     public String processRentalRequest(String toolCode, LocalDate checkoutDate, int rentalDays, int discountPercent) {
         ITool rentalTool = rentalToolDao.getToolByToolCode(toolCode);
-        if (rentalTool == null) {
-            // Would want to output some sort of message to the user at this point in the UI that the tool doesn't exist
-            return "Tool with tool code " + toolCode + " was unable to be found";
-        }
 
         RentalAgreement rentalAgreement = new RentalAgreement();
         rentalAgreement.setTool(rentalTool);

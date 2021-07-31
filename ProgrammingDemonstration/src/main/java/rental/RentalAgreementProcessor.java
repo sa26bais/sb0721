@@ -3,20 +3,25 @@ package main.java.rental;
 import main.java.tools.ITool;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RentalAgreementProcessor {
+
+    public static final String INVALID_DISCOUNT_WARNING = "Discount percent invalid, must be between 0% and 100%";
+    public static final String INVALID_DAYS_WARNING = "Rental days invalid, must be for 1 day or more";
+    private static final String INVALID_TOOL = "Tool code that was provided was not valid";
 
     public ProcessedRentalResult processRentalAgreement(RentalAgreement rentalAgreement) {
         ProcessedRentalResult rentalResult = new ProcessedRentalResult(rentalAgreement);
 
-        String validationMessage = validateRental(rentalAgreement, rentalResult);
+        List<String> validationMessage = validateRental(rentalAgreement);
 
-        if (validationMessage != null && !validationMessage.isEmpty()) {
-            rentalResult.setWarningMessage(validationMessage);
-            return rentalResult;
-        } else {
+        if (validationMessage.isEmpty()) {
             int chargeDays = calculateChargeDays(rentalAgreement);
             rentalResult.setChargeDays(chargeDays);
+        } else {
+            rentalResult.setWarningMessage(validationMessage);
         }
 
         return rentalResult;
@@ -51,13 +56,21 @@ public class RentalAgreementProcessor {
         return chargeDays;
     }
 
-    private String validateRental(RentalAgreement rentalAgreement, ProcessedRentalResult rentalResult) {
-        if (rentalAgreement.getDiscountPercentage() > 100 || rentalAgreement.getDiscountPercentage() < 0) {
-            return "Discount percent invalid, must be between 0% and 100%";
-        } else if (rentalAgreement.getDays() < 1) {
-            return "Rental days invalid, must be for 1 day or more";
-        } else {
-            return null;
+    private List<String> validateRental(RentalAgreement rentalAgreement) {
+        List<String> warnings = new ArrayList<>();
+
+        ITool rentalTool = rentalAgreement.getTool();
+        if (rentalTool == null) {
+            // Would want to output some sort of message to the user at this point in the UI that the tool doesn't exist
+            warnings.add(INVALID_TOOL);
         }
+        if (rentalAgreement.getDiscountPercentage() > 100 || rentalAgreement.getDiscountPercentage() < 0) {
+            warnings.add(INVALID_DISCOUNT_WARNING);
+        }
+        if (rentalAgreement.getDays() < 1) {
+            warnings.add(INVALID_DAYS_WARNING);
+        }
+
+        return warnings;
     }
 }

@@ -8,7 +8,6 @@ import main.java.tools.Ladder;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class RentalToolDao {
 
     private static final List<ITool> EXAMPLE_TOOL_LIST;
