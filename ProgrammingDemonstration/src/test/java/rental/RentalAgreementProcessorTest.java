@@ -27,17 +27,17 @@ class RentalAgreementProcessorTest {
     public void testCase2() {
         RentalProcessor rentalProcessor = new RentalProcessor();
         String result = rentalProcessor.processRentalRequest("LADW", LocalDate.of(2020, Month.JULY, 2), 3, 10);
-        String expectedResult = "Tool code: LADW\n" +
-                "Tool type: Ladder\n" +
-                "Tool brand: Werner\n" +
-                "Rental days: 3\n" +
-                "Check out date: 07/02/2020\n" +
-                "Due date: 07/05/2020\n" +
-                "Daily rental charge: $1.99\n" +
-                "Charge days: 2\n" +
-                "Pre-discount charge: $3.98\n" +
-                "Discount percent : 10%\n" +
-                "Discount amount: $0.40\n" +
+        String expectedResult = "Tool code: LADW" + System.lineSeparator() +
+                "Tool type: Ladder" + System.lineSeparator() +
+                "Tool brand: Werner" + System.lineSeparator() +
+                "Rental days: 3" + System.lineSeparator() +
+                "Check out date: 07/02/2020" + System.lineSeparator() +
+                "Due date: 07/05/2020" + System.lineSeparator() +
+                "Daily rental charge: $1.99" + System.lineSeparator() +
+                "Charge days: 2" + System.lineSeparator() +
+                "Pre-discount charge: $3.98" + System.lineSeparator() +
+                "Discount percent : 10%" + System.lineSeparator() +
+                "Discount amount: $0.40" + System.lineSeparator() +
                 "Final charge: $3.58";
 
         Assertions.assertEquals(result, expectedResult);
@@ -47,17 +47,17 @@ class RentalAgreementProcessorTest {
     public void testCase3() {
         RentalProcessor rentalProcessor = new RentalProcessor();
         String result = rentalProcessor.processRentalRequest("CHNS", LocalDate.of(2015, Month.JULY, 2), 5, 25);
-        String expectedResult = "Tool code: CHNS\n" +
-                "Tool type: Chainsaw\n" +
-                "Tool brand: Stihl\n" +
-                "Rental days: 5\n" +
-                "Check out date: 07/02/2015\n" +
-                "Due date: 07/07/2015\n" +
-                "Daily rental charge: $1.49\n" +
-                "Charge days: 3\n" +
-                "Pre-discount charge: $4.47\n" +
-                "Discount percent : 25%\n" +
-                "Discount amount: $1.12\n" +
+        String expectedResult = "Tool code: CHNS" + System.lineSeparator() +
+                "Tool type: Chainsaw" + System.lineSeparator() +
+                "Tool brand: Stihl" + System.lineSeparator() +
+                "Rental days: 5" + System.lineSeparator() +
+                "Check out date: 07/02/2015" + System.lineSeparator() +
+                "Due date: 07/07/2015" + System.lineSeparator() +
+                "Daily rental charge: $1.49" + System.lineSeparator() +
+                "Charge days: 3" + System.lineSeparator() +
+                "Pre-discount charge: $4.47" + System.lineSeparator() +
+                "Discount percent : 25%" + System.lineSeparator() +
+                "Discount amount: $1.12" + System.lineSeparator() +
                 "Final charge: $3.35";
 
         Assertions.assertEquals(result, expectedResult);
@@ -67,17 +67,17 @@ class RentalAgreementProcessorTest {
     public void testCase4() {
         RentalProcessor rentalProcessor = new RentalProcessor();
         String result = rentalProcessor.processRentalRequest("JAKD", LocalDate.of(2015, Month.SEPTEMBER, 3), 6, 0);
-        String expectedResult = "Tool code: JAKD\n" +
-                "Tool type: Jackhammer\n" +
-                "Tool brand: DeWalt\n" +
-                "Rental days: 6\n" +
-                "Check out date: 09/03/2015\n" +
-                "Due date: 09/09/2015\n" +
-                "Daily rental charge: $2.99\n" +
-                "Charge days: 3\n" +
-                "Pre-discount charge: $8.97\n" +
-                "Discount percent : 0%\n" +
-                "Discount amount: $0.00\n" +
+        String expectedResult = "Tool code: JAKD" + System.lineSeparator() +
+                "Tool type: Jackhammer" + System.lineSeparator() +
+                "Tool brand: DeWalt" + System.lineSeparator() +
+                "Rental days: 6" + System.lineSeparator() +
+                "Check out date: 09/03/2015" + System.lineSeparator() +
+                "Due date: 09/09/2015" + System.lineSeparator() +
+                "Daily rental charge: $2.99" + System.lineSeparator() +
+                "Charge days: 3" + System.lineSeparator() +
+                "Pre-discount charge: $8.97" + System.lineSeparator() +
+                "Discount percent : 0%" + System.lineSeparator() +
+                "Discount amount: $0.00" + System.lineSeparator() +
                 "Final charge: $8.97";
 
         Assertions.assertEquals(result, expectedResult);
@@ -87,17 +87,17 @@ class RentalAgreementProcessorTest {
     public void testCase5() {
         RentalProcessor rentalProcessor = new RentalProcessor();
         String result = rentalProcessor.processRentalRequest("JAKR", LocalDate.of(2015, Month.JULY, 2), 9, 0);
-        String expectedResult = "Tool code: JAKR\n" +
-                "Tool type: Jackhammer\n" +
-                "Tool brand: Ridgid\n" +
-                "Rental days: 9\n" +
-                "Check out date: 07/02/2015\n" +
-                "Due date: 07/11/2015\n" +
-                "Daily rental charge: $2.99\n" +
-                "Charge days: 5\n" +
-                "Pre-discount charge: $14.95\n" +
-                "Discount percent : 0%\n" +
-                "Discount amount: $0.00\n" +
+        String expectedResult = "Tool code: JAKR" + System.lineSeparator() +
+                "Tool type: Jackhammer" + System.lineSeparator() +
+                "Tool brand: Ridgid" + System.lineSeparator() +
+                "Rental days: 9" + System.lineSeparator() +
+                "Check out date: 07/02/2015" + System.lineSeparator() +
+                "Due date: 07/11/2015" + System.lineSeparator() +
+                "Daily rental charge: $2.99" + System.lineSeparator() +
+                "Charge days: 5" + System.lineSeparator() +
+                "Pre-discount charge: $14.95" + System.lineSeparator() +
+                "Discount percent : 0%" + System.lineSeparator() +
+                "Discount amount: $0.00" + System.lineSeparator() +
                 "Final charge: $14.95";
 
         Assertions.assertEquals(result, expectedResult);
@@ -107,17 +107,17 @@ class RentalAgreementProcessorTest {
     public void testCase6() {
         RentalProcessor rentalProcessor = new RentalProcessor();
         String result = rentalProcessor.processRentalRequest("JAKR", LocalDate.of(2020, Month.JULY, 2), 4, 50);
-        String expectedResult = "Tool code: JAKR\n" +
-                "Tool type: Jackhammer\n" +
-                "Tool brand: Ridgid\n" +
-                "Rental days: 4\n" +
-                "Check out date: 07/02/2020\n" +
-                "Due date: 07/06/2020\n" +
-                "Daily rental charge: $2.99\n" +
-                "Charge days: 1\n" +
-                "Pre-discount charge: $2.99\n" +
-                "Discount percent : 50%\n" +
-                "Discount amount: $1.50\n" +
+        String expectedResult = "Tool code: JAKR" + System.lineSeparator() +
+                "Tool type: Jackhammer" + System.lineSeparator() +
+                "Tool brand: Ridgid" + System.lineSeparator() +
+                "Rental days: 4" + System.lineSeparator() +
+                "Check out date: 07/02/2020" + System.lineSeparator() +
+                "Due date: 07/06/2020" + System.lineSeparator() +
+                "Daily rental charge: $2.99" + System.lineSeparator() +
+                "Charge days: 1" + System.lineSeparator() +
+                "Pre-discount charge: $2.99" + System.lineSeparator() +
+                "Discount percent : 50%" + System.lineSeparator() +
+                "Discount amount: $1.50" + System.lineSeparator() +
                 "Final charge: $1.50";
 
         Assertions.assertEquals(result, expectedResult);
