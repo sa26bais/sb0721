@@ -76,7 +76,7 @@ public class RentalAgreementProcessor {
                 if (isWeekendDay(holiday)) {
                     weekendDays--;
                 } else {
-                    weekDays++;
+                    weekDays--;
                 }
             }
         }
