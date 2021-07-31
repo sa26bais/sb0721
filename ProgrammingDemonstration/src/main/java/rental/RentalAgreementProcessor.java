@@ -104,7 +104,7 @@ public class RentalAgreementProcessor {
         holidays.add(getLaborDay(year));
         holidays.add(getObservedIndependenceDay(year));
 
-        //  adjust the holidays that are observed here as needed. Would likely also want to add configs to have
+        // Adjust the holidays that are observed here as needed. Would likely also want to add configs to have
         // support for enabling/disabling holiday observance as needed.
 
         return holidays;
