@@ -1,6 +1,9 @@
 package test.java.rental;
 
+import main.java.rental.RentalAgreement;
 import main.java.rental.RentalAgreementProcessor;
+import main.java.tools.Chainsaw;
+import main.java.tools.Ladder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -37,5 +40,38 @@ class RentalAgreementProcessorTest {
     public void testSundayIndependenceDay() {
         LocalDate observedIndependenceDay = RentalAgreementProcessor.getObservedIndependenceDay(2021);
         Assertions.assertEquals(observedIndependenceDay, LocalDate.of(2021, Month.JULY, 5));
+    }
+
+    @Test
+    public void testRentalWithoutWeekendsOrHolidays() {
+        RentalAgreementProcessor rentalAgreementProcessor = new RentalAgreementProcessor();
+        RentalAgreement rentalAgreement = new RentalAgreement();
+        rentalAgreement.setTool(new Chainsaw());
+        rentalAgreement.setCheckoutDate(LocalDate.of(2021, Month.JULY, 25));
+        rentalAgreement.setDays(5);
+        int chargeDays = rentalAgreementProcessor.calculateChargeDays(rentalAgreement);
+        Assertions.assertEquals(chargeDays, 5);
+    }
+
+    @Test
+    public void testRentalOverWeekendWithChargeWithoutHolidays() {
+        RentalAgreementProcessor rentalAgreementProcessor = new RentalAgreementProcessor();
+        RentalAgreement rentalAgreement = new RentalAgreement();
+        rentalAgreement.setTool(new Ladder());
+        rentalAgreement.setCheckoutDate(LocalDate.of(2021, Month.JULY, 29));
+        rentalAgreement.setDays(4);
+        int chargeDays = rentalAgreementProcessor.calculateChargeDays(rentalAgreement);
+        Assertions.assertEquals(chargeDays, 4);
+    }
+
+    @Test
+    public void testRentalOverWeekendWithoutChargeWithoutHolidays() {
+        RentalAgreementProcessor rentalAgreementProcessor = new RentalAgreementProcessor();
+        RentalAgreement rentalAgreement = new RentalAgreement();
+        rentalAgreement.setTool(new Chainsaw());
+        rentalAgreement.setCheckoutDate(LocalDate.of(2021, Month.JULY, 29));
+        rentalAgreement.setDays(4);
+        int chargeDays = rentalAgreementProcessor.calculateChargeDays(rentalAgreement);
+        Assertions.assertEquals(chargeDays, 2);
     }
 }

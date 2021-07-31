@@ -5,6 +5,7 @@ import main.java.tools.ITool;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,31 +32,64 @@ public class RentalAgreementProcessor {
         return rentalResult;
     }
 
-    private int calculateChargeDays(RentalAgreement rentalAgreement) {
+    public int calculateChargeDays(RentalAgreement rentalAgreement) {
         int chargeDays = 0;
-        int weekDays = 0;
-        int weekendDays = 0;
         int holidays = 0;
 
         LocalDate checkoutDate = rentalAgreement.getCheckoutDate();
         LocalDate returnDate = rentalAgreement.getReturnDate();
 
+        int daysBetweenCheckoutReturn = Math.toIntExact(checkoutDate.until(returnDate, ChronoUnit.DAYS));
 
-        // To quiet inspections of changes; FIXME: remove
-        weekDays++;
-        weekendDays++;
-        holidays++;
-        // end code to mute warnings
+        // Handle the complete weeks
+        int completeWeeks = (daysBetweenCheckoutReturn / 7);
+        int weekDays = completeWeeks * 5;
+        int weekendDays = completeWeeks * 2;
+
+        // Handle the partial week
+        int remainingDays = (daysBetweenCheckoutReturn % 7);
+        int firstChargedDayOfWeek = checkoutDate.plusDays(1).getDayOfWeek().getValue();
+
+        int remainingWeekendDays = 0;
+        if (firstChargedDayOfWeek + remainingDays > DayOfWeek.SATURDAY.getValue()) {
+            remainingWeekendDays++;
+        }
+        if (firstChargedDayOfWeek + remainingDays > DayOfWeek.SUNDAY.getValue()) {
+            remainingWeekendDays++;
+        }
+
+        int remainingWeekDays = remainingDays - remainingWeekendDays;
+        weekDays += remainingWeekDays;
+        weekendDays += remainingWeekendDays;
+
+        // Now remove holidays from other totals as needed
+
+        Set<LocalDate> holidaysToCheck = new HashSet<>();
+        for (int year = checkoutDate.getYear(); year <= returnDate.getYear(); year++) {
+            Set<LocalDate> yearlyHolidays = getHolidaysForYear(year);
+            holidaysToCheck.addAll(yearlyHolidays);
+        }
+
+        for (LocalDate holiday : holidaysToCheck) {
+            if (checkoutDate.isBefore(holiday) && (returnDate.isEqual(holiday) || returnDate.isAfter(holiday))) {
+                holidays++;
+                if (isWeekendDay(holiday)) {
+                    weekendDays--;
+                } else {
+                    weekDays++;
+                }
+            }
+        }
 
         ITool tool = rentalAgreement.getTool();
         if (tool.isChargeWeekdays()) {
-            chargeDays+=weekDays;
+            chargeDays += weekDays;
         }
         if (tool.isChargeWeekends()) {
-            chargeDays+=weekendDays;
+            chargeDays += weekendDays;
         }
         if (tool.isChargeHolidays()) {
-            chargeDays+=holidays;
+            chargeDays += holidays;
         }
         return chargeDays;
     }
@@ -70,8 +104,8 @@ public class RentalAgreementProcessor {
         holidays.add(getLaborDay(year));
         holidays.add(getObservedIndependenceDay(year));
 
-        //Would adjust the holidays that are observed here as needed. Would likely also want to add configs to have
-        //support for enabling/disabling holiday observance as needed.
+        //  adjust the holidays that are observed here as needed. Would likely also want to add configs to have
+        // support for enabling/disabling holiday observance as needed.
 
         return holidays;
     }

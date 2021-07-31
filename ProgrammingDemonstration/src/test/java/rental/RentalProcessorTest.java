@@ -11,7 +11,6 @@ class RentalProcessorTest {
 
     public static final String VALID_TOOL_CODE = "JAKR";
 
-
     @Test
     public void testInvalidToolCode() {
         RentalProcessor rentalProcessor = new RentalProcessor();
